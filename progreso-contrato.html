@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <link rel="icon" href="img/favicon_white.ico" sizes="16x16 32x32 48x48" type="image/png">
+
+    <title>Progreso por Contrato - PASS Consultores</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	
+	<!-- Date Time Picker CSS -->        
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+	
+	<!-- Main Style CSS -->
+	<link href="css/style.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+    body {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="consulta-progreso">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand logo" href="#">
+					<img src="img/logo.jpg" alt="Logo PASS">
+				</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="index.html">Tickets sin Contrato</a>
+                    </li>
+                    <li>
+                        <a href="progreso-contrato.html">Progreso por Contrato</a>
+                    </li>
+                    <!--<li>
+                        <a href="#">Contact</a>
+                    </li>-->
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <h1 id="title-filtro">Progreso por Contrato</h1>
+			<!--<form id="consulta-form" action='consulta.php' method='POST'>
+				<div class="filtro-consulta col-md-12">
+					
+					 <div class="form-group col-md-2">
+						<label for="select_cuentas">Cuentas:</label>
+						<select class="form-control" id="select_cuentas">
+							<option>Todas</option>
+						</select>
+					</div>
+					<!--
+					<div class="form-group col-md-2">
+						<label for="poliza">Poliza</label>
+						<input type="text" class="form-control" name="poliza">
+					</div>--
+					<div class="form-group col-md-2">
+						<label class="control-label" for="fechaAño">Año</label>
+						<div class='input-group date' id='fechaAño'>
+							<input type='text' name="fechaAño" class="form-control" />
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+					<!--<div class="form-group col-md-2">
+						<label class="control-label" for="fechaMes">Mes</label>
+						<div class='input-group date' id='fechaMes'>
+							<input type='text' name="fechaMes" class="form-control" />
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>--
+					<div class="form-group col-md-2">
+						<input type="hidden" class="form-control" name="page" value="1">
+						<input type="button" class="form-control btn btn-primary" name=query-submit value="Consultar">
+					</div>
+				</div>
+			</form>-->
+			<div class="tabla-openTickets col-md-12">
+				<table class="table text-center tabla-consulta">
+					<thead>
+                        <tr>
+                            <th colspan="4"></th>
+                            <th colspan="3"></th>
+                        </tr>
+                        <tr>
+                            <th width="40%">Cuenta</th>
+                            <th>Póliza</th>
+                            <th>Contrato</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Contratadas</th>
+                            <th>Usadas</th>
+                            <th>Restantes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contratos_trs">
+                    </tbody>
+			  </table>
+            </div>
+			<div class="loader col-md-12 text-center">
+				 <img src="img/2.png" alt="Loading" height="42" width="42">
+			</div>
+        </div>
+        <!-- /.row -->
+        
+        <!-- conTickets-modal -->
+        <div id="conTickets-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Tickets en Contrato</h4>
+                        <p id="contractid" class="hidden"></p>
+                    </div>
+                    <div class="modal-body" >
+                        <div class="panel panel-default col-md-12">
+                            <div class="panel-body">
+                                <div class="col-md-6" id="info-conTickets">
+                                    <h4>Cuenta: <span id="cue-modal"></span></h4>
+                                    <h4>Póliza: <span id="pol-modal"></span></h4>
+                                    <h4>Contrato: <span id="con-modal"></span></h4>
+                                    <h4>Fecha de inicio: <span id="fechaIni-modal"></span></h4>
+                                    <h4>Fecha de termino: <span id="fechaFin-modal"></span></h4>
+                                    <!--<h4>Cuenta: <span id="cue-modal"></span></h4>-->
+                                </div>
+                                <div class="col-md-6">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="4">Horas</th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th>Contratadas</th>
+                                                <th>Usadas</th>
+                                                <th>Restantes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center">
+                                            <tr>
+                                                <th>En Contrato</th>
+                                                <td id="conHours-modal"></td>
+                                                <td id="usHours-modal"></td>
+                                                <td id="resHours-modal"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Reales</th>
+                                                <td id="conHoursR-modal"></td>
+                                                <td id="usHoursR-modal"></td>
+                                                <td id="resHoursR-modal"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class='progress'>
+                                        <div id="progBar-modal" class='progress-bar' role='progressbar' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100' style='width:0%'>0%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="panel panel-default col-md-6">
+                            <div class="panel-body">
+                                
+                            </div>
+                        </div>-->
+                        <table class="table text-center" id="conTickets-table">
+                            <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th>Cuenta</th>
+                                  <th>Ticket</th>
+                                  <th>Fecha</th>
+                                  <th>Asunto</th>
+                                  <th>Estatus</th>
+                                  <th>Horas</th>
+                                  <th>Asignado</th>
+                              </tr>
+                            </thead>
+                            <tbody id="conTickets_trs">
+                            </tbody>
+                      </table>
+                        <!--<div class="panel panel-default col-md-12">
+                            <div class="panel-body" id="text-report"></div>
+                        </div>-->
+                    </div>
+                    <div class="modal-footer">
+                        <!--<button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-pdf">Descargar PDF</button>-->
+                        <button type="button" class="btn btn-primary" id="btn-pdf" data_correct='false'>Descargar PDF</button>
+                        <!--<a href="#" id="link-pdf">Descargar</a>-->
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery Version 1.11.1 -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+	
+	<!-- For Date Picker js -->         
+	<script src="js/moment.js"></script>
+	<script src="js/locale/es.js"></script>
+	<script src="js/transition.js"></script>
+	<script src="js/collapse.js"></script>
+	<script src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			$('#fechaAño').datetimepicker({
+				format: "YYYY",
+				showTodayButton: true,
+				locale: "es",
+				allowInputToggle: true,
+				defaultDate: new Date()
+			});
+            /*
+			$('#fechaMes').datetimepicker({
+				format: "MM",
+				showTodayButton: true,
+				locale: "es",
+				allowInputToggle: true,
+				showClear: true
+			});
+            */
+		});
+	</script>
+    
+    <!-- pdfMake -->
+    <script src='js/pdfmake.min.js'></script>
+ 	<script src='js/vfs_fonts.js'></script>
+    
+    <!-- HTML to Canvas -->
+    <!--<script src="js/html2canvas.js"></script>-->
+	
+	<!-- Main JS -->
+    <script src="js/main.js"></script>
+	
+	<!-- Pagination JS -->
+	<!--
+    <script src="js/pagination.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			$('#pagination-container').pagination({
+				dataSource: rows,
+				callback: function(data, pagination) {
+					// template method of yourself
+					var html = template(data);
+					$('#data-container').html(html);
+				}
+			});
+			function template(data) {
+				var html = '<tr>';
+				$.each(data, function(index, item){
+					html += '<td>' + item + '</td>';
+				});
+				html += '<tr>';
+				return html;
+			}
+		});
+	</script>
+	-->
+</body>
+
+</html>

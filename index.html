@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <link rel="icon" href="img/favicon_white.ico" sizes="16x16 32x32 48x48" type="image/png">
+
+    <title>Tickets sin Contrato - PASS Consultores</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	
+	<!-- Date Time Picker CSS -->        
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+	
+	<!-- Main Style CSS -->
+	<link href="css/style.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+    body {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="start_consulta">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand logo" href="#">
+					<img src="img/logo.jpg" alt="Logo PASS">
+				</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="index.html">Tickets sin Contrato</a>
+                    </li>
+                    <li>
+                        <a href="progreso-contrato.html">Progreso por Contrato</a>
+                    </li>
+                    <!--<li>
+                        <a href="#">Contact</a>
+                    </li>-->
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+			<form id="consulta-form" action='consulta.php' method='POST'>
+				<div class="filtro-consulta col-md-12">
+					<h1 id="title-filtro">Tickets sin Contrato</h1>
+					 <!--<div class="form-group col-md-2">
+						<label for="select_cuentas">Cuentas:</label>
+						<select class="form-control" id="select_cuentas">
+							<option>Todas</option>
+						</select>
+					</div>
+					<!--
+					<div class="form-group col-md-2">
+						<label for="poliza">Poliza</label>
+						<input type="text" class="form-control" name="poliza">
+					</div>-->
+					<!--<div class="form-group col-md-2">
+						<label class="control-label" for="fechaAño">Año</label>
+						<div class='input-group date' id='fechaAño'>
+							<input type='text' name="fechaAño" class="form-control" />
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+					<div class="form-group col-md-2">
+						<label class="control-label" for="fechaMes">Mes</label>
+						<div class='input-group date' id='fechaMes'>
+							<input type='text' name="fechaMes" class="form-control" />
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+					<div class="form-group col-md-2">
+						<input type="hidden" class="form-control" name="page" value="1">
+						<input type="button" class="form-control btn btn-primary" name="query-submit" value="Buscar">
+					</div>-->
+				</div>
+			</form>
+			<div class="tabla-openTickets col-md-12">
+				<table class="table text-center tabla-consulta">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Cuenta</th>
+                            <th>Ticket</th>
+                            <th>Referencia</th>
+                            <th>Horas</th>
+                            <th>Estatus</th>
+                            <th>Fecha Elab</th>
+                            <th>Fecha Cerrado</th>
+                            <th>Tiempo sin enlazar</th>
+                            <th>Asignado</th>
+                            <th>Enlace</th>
+                        </tr>
+					</thead>
+					<tbody id="openTickets_trs">
+					</tbody>
+			  </table>
+            </div>
+			<div class="loader col-md-12 text-center">
+				 <img src="img/2.png" alt="Loading" height="42" width="42">
+			</div>
+        </div>
+        <!-- /.row -->
+        
+        <!-- Modal -->
+        <div id="enlaceModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Detalle del enlace</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Ticket: <span id="mdl-ticketNo"></span></h4>
+                        <h4>Refer: <span id="mdl-ticketRefer"></span></h4>
+                        <h4>Horas: <span id="mdl-ticketHours"></span></h4>
+                        <h4>Cuenta: <span id="mdl-cuenta"></span></h4>
+                        <h4>Póliza: <span id="mdl-poliza"></span></h4>
+                        <h4>Horas contratadas: <span id="mdl-conthoras"></span></h4>
+                        <h4>Horas usadas: <span id="mdl-ushoras"></span></h4>
+                        <h4>Horas restantes: <span id="mdl-reshoras"></span></h4>
+                        <br>
+                        <div class="alert alert-danger hidden" id="alert-hours">
+                            <strong>Advertencia!</strong><br> Con este ticket la póliza excede el límite de horas contratadas.
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="btn-mdlEnlazar" data-dismiss="modal">Enlazar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery Version 1.11.1 -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+	
+	<!-- For Date Picker js -->         
+	<script src="js/moment.js"></script>
+	<script src="js/locale/es.js"></script>
+	<script src="js/transition.js"></script>
+	<script src="js/collapse.js"></script>
+	<script src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			$('#fechaAño').datetimepicker({
+				format: "YYYY",
+				showTodayButton: true,
+				locale: "es",
+				allowInputToggle: true,
+				defaultDate: new Date()
+			});
+			$('#fechaMes').datetimepicker({
+				format: "MM",
+				showTodayButton: true,
+				locale: "es",
+				allowInputToggle: true,
+				showClear: true
+			});
+		});
+	</script>
+	
+	<!-- Main JS -->
+    <script src="js/main.js"></script>
+	
+	<!-- Pagination JS -->
+	<!--
+    <script src="js/pagination.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			$('#pagination-container').pagination({
+				dataSource: rows,
+				callback: function(data, pagination) {
+					// template method of yourself
+					var html = template(data);
+					$('#data-container').html(html);
+				}
+			});
+			function template(data) {
+				var html = '<tr>';
+				$.each(data, function(index, item){
+					html += '<td>' + item + '</td>';
+				});
+				html += '<tr>';
+				return html;
+			}
+		});
+	</script>
+	-->
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+
+.table th {
+	text-align: center;
+}
+
+input[name=query-submit] {
+	margin-top: 25px;
+}
+
+#title-filtro {
+	margin-bottom: 30px;
+}
+
+.tabla-consulta {
+	margin-top: 20px;
+}
+
+.logo {
+    margin-top: -20px;
+}
+
+.logo img{
+    width: 120px;
+}
+
+.navbar {
+    height: 65px;
+    padding-top: 15px
+}
+
+.tabla-consulta > tbody > tr.warning > td {
+    background-color: #f2dede;
+}
+
+.table > tbody > tr.otherAc > td,
+.table > tbody > tr.tDuplicate > td {
+    background-color: #dca7a7;
+}
+
+/*.tabla-consulta > tbody > tr.danger > td {
+    background-color: #dca7a7;
+}
+*/
+/*.danger {*/
+.tabla-consulta > tbody > tr.danger > td {
+    animation:myfirst 3s;
+    -moz-animation:myfirst 3s infinite; /* Firefox */
+    -webkit-animation:myfirst 3s infinite; /* Safari and Chrome */
+}
+
+@-moz-keyframes myfirst /* Firefox */
+{
+0%   {background:#dca7a7;}
+50%  {background:#f2dede;}
+100%   {background:#dca7a7;}
+}
+
+    @-webkit-keyframes myfirst /* Safari and Chrome */
+{
+0%   {background:#dca7a7;}
+50%  {background:#f2dede;}
+100%   {background:#dca7a7;}
+}
+
+#contratos_trs .progress {
+    margin-bottom: 3px;
+    height: 15px;
+    margin-top: -7px;
+}
+
+#contratos_trs .progress .progress-bar {
+    line-height: 15px;
+}
+
+#contratos_trs .progress .progress-bar-success {
+    background-color: #337ab7;
+}
+
+#contratos_trs > tr > td[colspan="7"] {
+    border-top: 0px;
+}
